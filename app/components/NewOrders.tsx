@@ -1,110 +1,78 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import * as XLSX from "xlsx"
 import Loading from '../loading'
+import { useOrders } from '../hooks/useOrders'
+import { moneyFormat, formatDate } from '../lib/utils'
+import { Button } from './ui/Button'
+import { Badge } from './ui/Badge'
+import { Card } from './ui/Card'
+import { Table, THead, TBody, TR, TH, TD } from './ui/Table'
 
-const moneyFormat = (num: number, locale?: string, currency?: string): string => {
-  locale = locale || 'en-US'
-  currency = currency || 'USD'
-  return new Intl.NumberFormat(locale, { style: "currency", currency: currency }).format(
-    num,
-  )
-}
-
-export default function (){
-  const [orders, setOrders] = useState<{no: string, name: string, status: string, total: number}[]>([])
-  const [loading, setLoading] = useState(true)
-  const [errMsg, setErrMsg] = useState<string|undefined>()
-  const [status, setStatus] = useState<'all'|'paid'|'unpaid'>('all')
-  const [total, setTotal] = useState<{all:number, paid: number, unpaid: number}>()
-
-  useEffect(() => {
-    setLoading(true)
-    setErrMsg(undefined)
-
-    const fetchData = async () => {
-      try {
-        const limit = total ? (total[status] || 20):20
-        const response = await fetch(`/api/orders/new?s=${status}&limit=${limit}`)
-        if ( !response.ok){
-          throw new Error("Failed to fetch new orders")
-        }
-
-        const data = await response.json()
-        setOrders(data.orders)
-        if (status === 'all'){
-          setTotal({all: 20, paid: data.totalPaid, unpaid: data.totalUnpaid})
-        }
-        setLoading(false)
-      } catch (err: any){
-        console.log({err})
-        setLoading(false)
-        setErrMsg(err.message)
-      }
-    }
-
-    fetchData()
-  }, [status])
+export default function NewOrders() {
+  const { orders, loading, errMsg, status, setStatus } = useOrders()
 
   const downloadExcel = () => {
-    if (orders && Array.isArray(orders) && orders.length > 0){
-      const d = new Date()
-      const workbook = XLSX.utils.book_new();
-      const worksheet = XLSX.utils?.json_to_sheet(orders);
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders');
-      // Save the workbook as an Excel file
-      XLSX.writeFile(workbook, `order-${status}-${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}.xlsx`);
+    if (orders && orders.length > 0) {
+      const workbook = XLSX.utils.book_new()
+      const worksheet = XLSX.utils.json_to_sheet(orders)
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders')
+      XLSX.writeFile(workbook, `order-${status}-${formatDate(new Date())}.xlsx`)
     }
   }
 
-  return (<>
-    <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-lg relative shadow-md p-3">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 gap-2">
-        <h3 className="font-jost font-bold text-lg">New Orders</h3>
-        <div className="flex gap-1">
-          <button type="button" onClick={() => setStatus('all')} className="rounded-sm cursor-pointer border border-slate-500 px-4 py-1 text-xs transition-colors hover:bg-slate-300/90 dark:hover:bg-slate-600/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-500 disabled:pointer-events-none disabled:opacity-50">All</button>
-          <button type="button" onClick={() => setStatus('paid')} className="rounded-sm cursor-pointer border border-slate-500 px-4 py-1 text-xs transition-colors hover:bg-slate-300/90 dark:hover:bg-slate-600/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-500 disabled:pointer-events-none disabled:opacity-50">Paid</button>
-          <button type="button" onClick={() => setStatus('unpaid')} className="rounded-sm cursor-pointer border border-slate-500 px-4 py-1 text-xs transition-colors hover:bg-slate-300/90 dark:hover:bg-slate-600/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-500 disabled:pointer-events-none disabled:opacity-50">Unpaid</button>
-          <button type="button" onClick={downloadExcel} className="rounded-sm bg-slate-600 dark:bg-slate-300 text-slate-100 dark:text-slate-900 border border-slate-700 dark:border-slate-200 cursor-pointer px-4 py-1 text-xs transition-colors hover:bg-slate-600/90 dark:hover:bg-slate-300/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-600 disabled:pointer-events-none disabled:opacity-50">Download Excel</button>
-        </div>
-      </div>
-      <div className="w-full overflow-y-auto">
-        <table className="w-full border-collapse border border-slate-300 dark:border-slate-600 text-sm">
-          <thead>
-            <tr className="bg-slate-200 dark:bg-slate-700">
-              <th className="py-2 px-3 border border-slate-300 dark:border-slate-600 w-[1%]"></th>
-              <th className="py-2 px-3 border border-slate-300 dark:border-slate-600">No. Order</th>
-              <th className="py-2 px-3 border border-slate-300 dark:border-slate-600">Customer Name</th>
-              <th className="py-2 px-3 border border-slate-300 dark:border-slate-600 w-[1%]">Status</th>
-              <th className="py-2 px-3 border border-slate-300 dark:border-slate-600">Total Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(loading || errMsg) ? (
-              <tr>
-                <td className="py-2 px-3 border border-slate-300 dark:border-slate-600 text-center" colSpan={5}>
-                  {loading ? (<Loading />):(<span className="text-red-600 dark:text-red-400">{errMsg}</span>)}
-                </td>
-              </tr>
-            ):(
-              orders.map((order, index) => (
-                <tr key={order.no}>
-                  <td className="py-2 px-3 border border-slate-300 dark:border-slate-600 w-[1%] text-end">
-                    {index+1}
-                  </td>
-                  <td className="py-2 px-3 border border-slate-300 dark:border-slate-600">{order.no}</td>
-                  <td className="py-2 px-3 border border-slate-300 dark:border-slate-600">{order.name}</td>
-                  <td className="py-2 px-3 border border-slate-300 dark:border-slate-600 text-center w-[1%]">
-                    <span className={`block w-full text-center text-xs px-2 py-1 text-white rounded-lg ${order.status === 'paid' ? 'bg-emerald-600':'bg-orange-600'}`}>{order.status}</span>
-                  </td>
-                  <td className="py-2 px-3 border border-slate-300 dark:border-slate-600 text-end">{moneyFormat(order.total)}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+  const Filters = (
+    <div className="flex flex-wrap gap-2">
+      <Button onClick={() => setStatus('all')} variant={status === 'all' ? 'primary' : 'outline'}>
+        All
+      </Button>
+      <Button onClick={() => setStatus('paid')} variant={status === 'paid' ? 'primary' : 'outline'}>
+        Paid
+      </Button>
+      <Button onClick={() => setStatus('unpaid')} variant={status === 'unpaid' ? 'primary' : 'outline'}>
+        Unpaid
+      </Button>
+      <Button onClick={downloadExcel} variant="primary" className="ml-0 md:ml-2">
+        Download Excel
+      </Button>
     </div>
-  </>)
+  )
+
+  return (
+    <Card title="New Orders" headerActions={Filters}>
+      {/* Table Section */}
+      <Table>
+        <THead>
+          <TH className="w-[1%]">#</TH>
+          <TH>No. Order</TH>
+          <TH>Customer Name</TH>
+          <TH className="w-[1%] text-center">Status</TH>
+          <TH className="text-right">Total Amount</TH>
+        </THead>
+        <TBody>
+          {loading || errMsg ? (
+            <TR>
+              <TD colSpan={5} className="py-8 text-center">
+                {loading ? <Loading /> : <span className="text-red-500 font-medium">{errMsg}</span>}
+              </TD>
+            </TR>
+          ) : (
+            orders.map((order, index) => (
+              <TR key={order.no}>
+                <TD className="w-[1%] text-slate-500 font-mono">{index + 1}</TD>
+                <TD className="font-medium text-slate-700 dark:text-slate-200">{order.no}</TD>
+                <TD className="text-slate-600 dark:text-slate-400">{order.name}</TD>
+                <TD className="w-[1%]">
+                  <Badge variant={order.status}>{order.status}</Badge>
+                </TD>
+                <TD className="text-right font-semibold text-slate-800 dark:text-slate-100">
+                  {moneyFormat(order.total)}
+                </TD>
+              </TR>
+            ))
+          )}
+        </TBody>
+      </Table>
+    </div>
+  )
 }
