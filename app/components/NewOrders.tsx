@@ -22,7 +22,7 @@ export default function NewOrders() {
   }
 
   const Filters = (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-brand-sm">
       <Button onClick={() => setStatus('all')} variant={status === 'all' ? 'primary' : 'outline'}>
         All
       </Button>
@@ -32,7 +32,7 @@ export default function NewOrders() {
       <Button onClick={() => setStatus('unpaid')} variant={status === 'unpaid' ? 'primary' : 'outline'}>
         Unpaid
       </Button>
-      <Button onClick={downloadExcel} variant="primary" className="ml-0 md:ml-2">
+      <Button onClick={downloadExcel} variant="primary" className="ml-0 md:ml-brand-sm">
         Download Excel
       </Button>
     </div>
@@ -53,19 +53,19 @@ export default function NewOrders() {
           {loading || errMsg ? (
             <TR>
               <TD colSpan={5} className="py-8 text-center">
-                {loading ? <Loading /> : <span className="text-red-500 font-medium">{errMsg}</span>}
+                {loading ? <Loading /> : <span className="text-brand-danger font-medium">{errMsg}</span>}
               </TD>
             </TR>
           ) : (
             orders.map((order, index) => (
               <TR key={order.no}>
-                <TD className="w-[1%] text-slate-500 font-mono">{index + 1}</TD>
-                <TD className="font-medium text-slate-700 dark:text-slate-200">{order.no}</TD>
-                <TD className="text-slate-600 dark:text-slate-400">{order.name}</TD>
+                <TD className="w-[1%] text-brand-secondary font-mono">{index + 1}</TD>
+                <TD className="font-medium text-brand-text-light dark:text-brand-text-dark">{order.no}</TD>
+                <TD className="text-brand-secondary">{order.name}</TD>
                 <TD className="w-[1%]">
                   <Badge variant={order.status}>{order.status}</Badge>
                 </TD>
-                <TD className="text-right font-semibold text-slate-800 dark:text-slate-100">
+                <TD className="text-right font-semibold text-brand-text-light dark:text-brand-text-dark">
                   {moneyFormat(order.total)}
                 </TD>
               </TR>

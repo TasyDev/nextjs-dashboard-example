@@ -5,13 +5,13 @@ interface BadgeProps {
 
 export const Badge = ({ children, variant = 'default' }: BadgeProps) => {
   const variants = {
-    paid: 'bg-emerald-600 text-white',
-    unpaid: 'bg-orange-600 text-white',
-    default: 'bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200'
+    paid: 'bg-brand-success text-white',
+    unpaid: 'bg-brand-warning text-white',
+    default: 'bg-brand-secondary/20 dark:bg-brand-secondary/40 text-brand-text-light dark:text-brand-text-dark'
   }
 
   return (
-    <span className={`block w-full text-center text-xs px-2 py-1 rounded-lg font-medium ${variants[variant]}`}>
+    <span className={`block w-full text-center text-brand-xs px-brand-sm py-brand-xs rounded-brand-md font-brand-medium ${variants[variant]}`}>
       {children}
     </span>
   )

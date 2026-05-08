@@ -5,4 +5,47 @@
 @theme {
   --font-sans: var(--font-inter);
   --font-jost: var(--font-jost);
+
+  /* Brand Colors */
+  --color-brand-primary: #6366f1;
+  --color-brand-secondary: #94a3b8;
+  --color-brand-accent: #f43f5e;
+  --color-brand-success: #10b981;
+  --color-brand-warning: #f59e0b;
+  --color-brand-danger: #ef4444;
+  
+  /* Surface & Text */
+  --color-brand-bg-light: #f8fafc;
+  --color-brand-bg-dark: #0f172a;
+  --color-brand-surface-light: #ffffff;
+  --color-brand-surface-dark: #1e293b;
+  --color-brand-text-light: #1e293b;
+  --color-brand-text-dark: #f1f5f9;
+
+  /* Brand Spacing */
+  --spacing-brand-xs: 0.25rem;  /* 4px */
+  --spacing-brand-sm: 0.5rem;   /* 8px */
+  --spacing-brand-md: 1rem;     /* 16px */
+  --spacing-brand-lg: 1.5rem;   /* 24px */
+  --spacing-brand-xl: 2rem;     /* 32px */
+
+  /* Brand Radios (Border Radius) */
+  --radius-brand-sm: 0.125rem;  /* 2px */
+  --radius-brand-md: 0.5rem;    /* 8px */
+  --radius-brand-lg: 1rem;      /* 16px */
+  --radius-brand-full: 9999px;
+
+  /* Brand Typography */
+  --font-size-brand-xs: 0.75rem;
+  --font-size-brand-sm: 0.875rem;
+  --font-size-brand-base: 1rem;
+  --font-size-brand-lg: 1.125rem;
+  --font-size-brand-xl: 1.25rem;
+
+  --font-weight-brand-light: 300;
+  --font-weight-brand-normal: 400;
+  --font-weight-brand-medium: 500;
+  --font-weight-brand-semibold: 600;
+  --font-weight-brand-bold: 700;
 }
+

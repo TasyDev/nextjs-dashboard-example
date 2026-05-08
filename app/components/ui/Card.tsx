@@ -8,14 +8,14 @@ interface CardProps {
 }
 
 export const Card = ({ children, className = "", title, headerActions }: CardProps) => (
-  <div className={`bg-slate-100 dark:bg-slate-700 rounded-lg shadow-md overflow-hidden ${className}`}>
+  <div className={`bg-brand-surface-light dark:bg-brand-surface-dark rounded-brand-lg shadow-md overflow-hidden ${className}`}>
     {(title || headerActions) && (
-      <div className="flex justify-between items-center p-4 border-b border-slate-200 dark:border-slate-600">
-        {title && <h3 className="font-jost font-bold text-lg text-slate-800 dark:text-slate-100">{title}</h3>}
-        {headerActions && <div className="flex gap-2">{headerActions}</div>}
+      <div className="flex justify-between items-center p-brand-md border-b border-brand-secondary/20">
+        {title && <h3 className="font-jost font-brand-bold text-brand-lg text-brand-text-light dark:text-brand-text-dark">{title}</h3>}
+        {headerActions && <div className="flex gap-brand-sm">{headerActions}</div>}
       </div>
     )}
-    <div className="p-4">
+    <div className="p-brand-md">
       {children}
     </div>
   </div>

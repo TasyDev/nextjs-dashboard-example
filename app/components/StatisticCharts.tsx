@@ -40,7 +40,7 @@ export default function StatisticCharts() {
   )
 
   return (
-    <div className="flex flex-col md:flex-row gap-6">
+    <div className="flex flex-col md:flex-row gap-brand-lg">
       {/* Visitors Chart */}
       <Card 
         className="w-full md:w-1/2" 
@@ -51,19 +51,19 @@ export default function StatisticCharts() {
           {loadingVisitors ? (
             <div className="h-full flex justify-center items-center"><Loading /></div>
           ) : visitorErrMsg ? (
-            <div className="h-full flex justify-center items-center text-red-500">{visitorErrMsg}</div>
+            <div className="h-full flex justify-center items-center text-brand-danger">{visitorErrMsg}</div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%" className="text-xs">
+            <ResponsiveContainer width="100%" height="100%" className="text-brand-xs">
               <LineChart data={visitors} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-600" vertical={false} />
-                <XAxis dataKey="date" stroke="#94a3b8" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-brand-secondary/20" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--color-brand-secondary)" />
                 <Legend verticalAlign="top" height={40} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                  itemStyle={{ color: '#fff' }}
+                  contentStyle={{ backgroundColor: 'var(--color-brand-surface-dark)', border: 'none', borderRadius: '8px', color: 'var(--color-brand-text-dark)' }}
+                  itemStyle={{ color: 'var(--color-brand-text-dark)' }}
                 />
-                <Line type="monotone" dataKey="views" name="Page Views" stroke="#f43f5e" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-                <Line type="monotone" dataKey="visitor" name="Visitors" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                <Line type="monotone" dataKey="views" name="Page Views" stroke="var(--color-brand-accent)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                <Line type="monotone" dataKey="visitor" name="Visitors" stroke="var(--color-brand-success)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           )}
@@ -80,18 +80,18 @@ export default function StatisticCharts() {
           {loadingSales ? (
             <div className="h-full flex justify-center items-center"><Loading /></div>
           ) : salesErrMsg ? (
-            <div className="h-full flex justify-center items-center text-red-500">{salesErrMsg}</div>
+            <div className="h-full flex justify-center items-center text-brand-danger">{salesErrMsg}</div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%" className="text-xs">
+            <ResponsiveContainer width="100%" height="100%" className="text-brand-xs">
               <BarChart data={sales} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-600" vertical={false} />
-                <XAxis dataKey="date" stroke="#94a3b8" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-brand-secondary/20" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--color-brand-secondary)" />
                 <Legend verticalAlign="top" height={40} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
+                  contentStyle={{ backgroundColor: 'var(--color-brand-surface-dark)', border: 'none', borderRadius: '8px', color: 'var(--color-brand-text-dark)' }}
                 />
-                <Bar dataKey="sales" name="Total Orders" fill="#f43f5e" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="paid" name="Paid Orders" fill="#10b981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="sales" name="Total Orders" fill="var(--color-brand-accent)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="paid" name="Paid Orders" fill="var(--color-brand-success)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}

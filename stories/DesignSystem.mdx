@@ -1,0 +1,284 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Tokens" />
+
+# Design System
+
+Documentation of the visual tokens used in the Next.js Dashboard.
+
+## Colors
+
+The application uses a curated brand palette defined in `global.css`.
+
+<ColorPalette>
+  <ColorItem 
+    title="Brand Primary" 
+    subtitle="Indigo" 
+    colors={{ Primary: '#6366f1' }} 
+  />
+  <ColorItem 
+    title="Brand Accent" 
+    subtitle="Rose" 
+    colors={{ Accent: '#f43f5e' }} 
+  />
+  <ColorItem 
+    title="Brand Status" 
+    subtitle="Success, Warning, Danger" 
+    colors={{ 
+      Success: '#10b981', 
+      Warning: '#f59e0b', 
+      Danger: '#ef4444' 
+    }} 
+  />
+  <ColorItem 
+    title="Neutral / Secondary" 
+    subtitle="Slate" 
+    colors={{ Secondary: '#94a3b8' }} 
+  />
+  <ColorItem 
+    title="Surfaces (Light)" 
+    subtitle="Background and Surface" 
+    colors={{ 
+      BG: '#f8fafc', 
+      Surface: '#ffffff',
+      Text: '#1e293b'
+    }} 
+  />
+  <ColorItem 
+    title="Surfaces (Dark)" 
+    subtitle="Background and Surface" 
+    colors={{ 
+      BG: '#0f172a', 
+      Surface: '#1e293b',
+      Text: '#f1f5f9'
+    }} 
+  />
+</ColorPalette>
+
+## Spacing
+
+We use a standardized spacing scale for gaps, margins, and paddings.
+
+<div className="token-grid">
+  <div className="token-row header">
+    <div>Token</div>
+    <div>Value</div>
+    <div>Pixels</div>
+    <div>Preview</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-xs`</div>
+    <div>`0.25rem`</div>
+    <div>4px</div>
+    <div><div className="space-preview" style={{ width: '4px', height: '16px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-sm`</div>
+    <div>`0.5rem`</div>
+    <div>8px</div>
+    <div><div className="space-preview" style={{ width: '8px', height: '16px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-md`</div>
+    <div>`1rem`</div>
+    <div>16px</div>
+    <div><div className="space-preview" style={{ width: '16px', height: '16px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-lg`</div>
+    <div>`1.5rem`</div>
+    <div>24px</div>
+    <div><div className="space-preview" style={{ width: '24px', height: '16px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-xl`</div>
+    <div>`2rem`</div>
+    <div>32px</div>
+    <div><div className="space-preview" style={{ width: '32px', height: '16px' }}></div></div>
+  </div>
+</div>
+
+## Border Radius (Radios)
+
+Standardized corner radii for components.
+
+<div className="token-grid">
+  <div className="token-row header">
+    <div>Token</div>
+    <div>Value</div>
+    <div>Pixels</div>
+    <div>Preview</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-sm`</div>
+    <div>`0.125rem`</div>
+    <div>2px</div>
+    <div><div className="radius-preview" style={{ borderRadius: '2px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-md`</div>
+    <div>`0.5rem`</div>
+    <div>8px</div>
+    <div><div className="radius-preview" style={{ borderRadius: '8px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-lg`</div>
+    <div>`1rem`</div>
+    <div>16px</div>
+    <div><div className="radius-preview" style={{ borderRadius: '16px' }}></div></div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-full`</div>
+    <div>`9999px`</div>
+    <div>Circle</div>
+    <div><div className="radius-preview" style={{ borderRadius: '9999px' }}></div></div>
+  </div>
+</div>
+
+## Typography
+
+### Font Sizes
+
+<div className="token-grid">
+  <div className="token-row header">
+    <div>Token</div>
+    <div>Value</div>
+    <div>Pixels</div>
+    <div>Preview</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-xs`</div>
+    <div>`0.75rem`</div>
+    <div>12px</div>
+    <div style={{ fontSize: '12px' }}>The quick brown fox</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-sm`</div>
+    <div>`0.875rem`</div>
+    <div>14px</div>
+    <div style={{ fontSize: '14px' }}>The quick brown fox</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-base`</div>
+    <div>`1rem`</div>
+    <div>16px</div>
+    <div style={{ fontSize: '16px' }}>The quick brown fox</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-lg`</div>
+    <div>`1.125rem`</div>
+    <div>18px</div>
+    <div style={{ fontSize: '18px' }}>The quick brown fox</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-xl`</div>
+    <div>`1.25rem`</div>
+    <div>20px</div>
+    <div style={{ fontSize: '20px' }}>The quick brown fox</div>
+  </div>
+</div>
+
+### Font Weights
+
+<div className="token-grid">
+  <div className="token-row header">
+    <div>Token</div>
+    <div>Value</div>
+    <div>Preview</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-light`</div>
+    <div>300</div>
+    <div style={{ fontWeight: 300 }}>Light weight text</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-normal`</div>
+    <div>400</div>
+    <div style={{ fontWeight: 400 }}>Normal weight text</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-medium`</div>
+    <div>500</div>
+    <div style={{ fontWeight: 500 }}>Medium weight text</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-semibold`</div>
+    <div>600</div>
+    <div style={{ fontWeight: 600 }}>Semibold weight text</div>
+  </div>
+  <div className="token-row">
+    <div className="token-name">`brand-bold`</div>
+    <div>700</div>
+    <div style={{ fontWeight: 700 }}>Bold weight text</div>
+  </div>
+</div>
+
+<style>
+  {`
+  .sbdocs-title {
+    color: #1e293b;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .token-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0 48px;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .token-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .token-row:last-child {
+    border-bottom: none;
+  }
+
+  .token-row:not(.header):hover {
+    background: #f8fafc;
+  }
+
+  .token-row.header {
+    background: #f8fafc;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  .token-name {
+    font-family: monospace;
+    font-weight: 600;
+    color: #6366f1;
+    background: #f5f3ff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    width: fit-content;
+  }
+
+  .space-preview {
+    background: #f43f5e;
+    border-radius: 2px;
+  }
+
+  .radius-preview {
+    width: 40px;
+    height: 40px;
+    background: #6366f1;
+    border: 1px solid #4f46e5;
+  }
+  `}
+</style>
+
