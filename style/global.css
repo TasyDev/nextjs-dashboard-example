@@ -1,8 +1,4 @@
-/*
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-*/
+/* CSS global configuration, import components and utils and tailwindcss */
 
 @import "tailwindcss";
 
