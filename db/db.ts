@@ -1,46 +1,56 @@
-import { connect } from "mongoose";
+// Unified require for Mongoose connection with caching to prevent multiple connections in development
 
+import mongoose from "mongoose";
+
+// Global cache for development to prevent multiple connections
 declare global {
-  var mongoose: any; // This must be a `var` and not a `let / const`
+  var dbCache: {
+    conn: typeof mongoose | null;
+    connecting: Promise<typeof mongoose> | null;
+  };
 }
 
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+// Cache object to store the connection and connecting promise
+if (!global.dbCache) {
+  global.dbCache = {
+    conn: null,
+    connecting: null,
+  };
 }
 
-async function db(dbUri?: string, dbName?: string) {
-  dbUri = dbUri || process.env.DB_URI!;
-  dbName = dbName || process.env.DB_NAME
+const cache = global.dbCache;
 
+// Function to connect to the MongoDB database
+export async function connectDB(
+  dbUri = process.env.DB_URI,
+  dbName = process.env.DB_NAME
+) {
+
+  // Validate that the DB_URI is provided
   if (!dbUri) {
-    throw new Error(
-      "Please define the DB_URI environment variable inside .env.local",
-    );
+    throw new Error("Missing DB_URI");
   }
 
-  if (cached.conn) {
-    return cached.conn;
+  // Connetion is cached, return it
+  if (cache.conn) {
+    return cache.conn;
   }
-  if (!cached.promise) {
-    const opts = {
+
+  // New connection, store the promise in cache
+  if (!cache.connecting) {
+    cache.connecting = mongoose.connect(dbUri, {
+      dbName,
       bufferCommands: false,
-      dbName
-    };
-
-    cached.promise = connect(dbUri, opts).then((mongoose) => {
-      return mongoose;
     });
   }
+
+  // Await the connection promise and cache the connection
   try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
+    cache.conn = await cache.connecting;
+    return cache.conn;
+  } catch (error) {
+    // If connection fails, reset the cache to allow retries
+    cache.connecting = null;
+    throw error;
   }
-
-  return cached.conn;
 }
-
-export default db;
